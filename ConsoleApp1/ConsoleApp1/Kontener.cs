@@ -1,53 +1,46 @@
-﻿using ConsoleApp1;
-
-public class Kontener
+﻿public class Kontener
 {
-    private double wagaL; // waga ładunku
-    private double wagaM; // maksymalna waga ładunku
-    private double wysokosc;
-    private double wagaK; // waga konternera
-    private double glebokosc;
-    private String numerS; // numer seryjny
+    public double wagaL; // waga ładunku
+    public double wagaM; // maksymalna waga ładunku
+    public double wysokosc;
+    public double wagaK; // waga kontenera
+    public double glebokosc;
+    public String numerS; // numer seryjny
+    public static int counter = 1;
 
-    public Kontener(double l, double w, double k, double g)
+    public Kontener(double w, double k, double g, double maxW)
     {
-        this.wagaL = l;
+        this.wagaL = 0;
         this.wysokosc = w;
         this.wagaK = k;
         this.glebokosc = g;
-        numerS = "KON";
+        this.wagaM = maxW;
+        this.numerS = "KON-" + counter++;
     }
-
 
     public void Oproznienie()
     {
         wagaL = 0;
     }
 
-    public void Zaladuj(double kg, String num)
+    public void Zaladuj(double kg)
     {
-        if (wagaL+kg>wagaM)
+        if (wagaL + kg > wagaM)
         {
-            throw new OverfillException();
+            throw new OverfillException("Błąd: kontener przepełniony");
         }
-        else
-        {
             wagaL += kg;
-        }
-
-
-        
-        
     }
 
-    public String toString()
+    public override string ToString()
     {
-        
-        
-        
-        return numerS + wagaL + wysokosc + wagaK;
+        return "Kontener " + "(numer:"+numerS+", głebokość:"+glebokosc+", waga kontenera:"+wagaK+", wysokosc:"+wysokosc+", maksymalna waga ladunku:"+wagaM+", waga ładunku:"+wagaL +")";
     }
+}
 
-
-
+public class OverfillException : Exception
+{
+    public OverfillException(string message) : base(message)
+    {
+    }
 }
